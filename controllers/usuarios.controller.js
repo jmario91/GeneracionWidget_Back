@@ -3,6 +3,7 @@ import Usuario from '../models/usuario.model.js';
 // CREATE - Crear un nuevo usuario
 export const crearUsuario = async (req, res) => {
   try {
+    
     const nuevoUsuario = new Usuario(req.body);
     const usuarioGuardado = await nuevoUsuario.save();
     
@@ -42,14 +43,12 @@ export const obtenerUsuarios = async (req, res) => {
   try {
     const { page = 1, limit = 10, activo, search } = req.query;
     const filtros = {};
-    
-    // Filtro por estado activo
+       
     if (activo !== undefined) {
       filtros.activo = activo === 'true';
     }
     
-    // Búsqueda por nombre o email
-    if (search) {
+      if (search) {
       filtros.$or = [
         { nombre: { $regex: search, $options: 'i' } },
         { email: { $regex: search, $options: 'i' } }
@@ -132,8 +131,8 @@ export const actualizarUsuario = async (req, res) => {
       id,
       actualizaciones,
       { 
-        new: true, // Retorna el documento actualizado
-        runValidators: true // Ejecuta las validaciones del schema
+        new: true,
+        runValidators: true 
       }
     );
     

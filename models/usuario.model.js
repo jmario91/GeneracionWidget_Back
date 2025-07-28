@@ -1,19 +1,6 @@
 import mongoose from 'mongoose';
-
-/* ────────────────────
-   ENUMS y catálogos
-────────────────────── */
-const SEXOS = ['H', 'M'];
-const ESTATUS_USUARIO = ['Alta', 'Baja'];
-const OCUPACIONES = ['Estudiante', 'Empleado', 'Independiente', 'Desempleado', 'Jubilado', 'Otro'];
-const ESTADOS_CIVILES = ['Soltero', 'Casado', 'Divorciado', 'Viudo', 'Unión libre'];
-const NIVELES_EDUCATIVOS = ['Primaria', 'Secundaria', 'Preparatoria', 'Licenciatura', 'Maestría', 'Doctorado'];
-const IDIOMAS = ['Español', 'Inglés', 'Francés', 'Alemán', 'Italiano', 'Portugués', 'Otro'];
-const HOBBIES_DISPONIBLES = ['Leer', 'Deportes', 'Música', 'Viajar', 'Cine'];
-
-/* ────────────────────
-   Schema
-────────────────────── */
+import { CATALOGOS } from '../utils/catalogos.js';
+ 
 const usuarioSchema = new mongoose.Schema(
   {
     nombre: {
@@ -36,16 +23,16 @@ const usuarioSchema = new mongoose.Schema(
     },
     estatus: {
       type: String,
-      enum: ESTATUS_USUARIO,
-      required: [true, 'El estatus es obligatorio']
+      enum: CATALOGOS.ESTATUS_USUARIO,
+   
     },
     fechaNacimiento: {
       type: String,
-      required: [true, 'La fecha de nacimiento es obligatoria']
+      
     },
     sexo: {
       type: String,
-      enum: SEXOS,
+      enum: CATALOGOS.SEXOS,
       required: [true, 'El sexo es obligatorio']
     },
     edad: {
@@ -56,24 +43,21 @@ const usuarioSchema = new mongoose.Schema(
     },
     entidad: {
       type: String,
-      required: [true, 'La entidad es obligatoria'],
-      trim: true
+    trim: true
     },
     municipio: {
       type: String,
-      required: [true, 'El municipio es obligatorio'],
+    
       trim: true
     },
     colonia: {
       type: String,
-      required: [true, 'La colonia es obligatoria'],
+    
       trim: true
     },
     codigoPostal: {
       type: String,
-      required: [true, 'El código postal es obligatorio'],
-      match: [/^\d{5}$/, 'El código postal debe tener 5 dígitos']
-    },
+      },
     talla: {
       type: Number,
       required: [true, 'La talla es obligatoria'],
@@ -96,33 +80,32 @@ const usuarioSchema = new mongoose.Schema(
     },
     aceptaTerminos: {
       type: Boolean,
-      required: [true, 'Debe aceptar los términos y condiciones']
+
     },
     // Nuevos campos opcionales
     ocupacion: {
       type: String,
-      enum: OCUPACIONES,
       trim: true
     },
     estadoCivil: {
       type: String,
-      enum: ESTADOS_CIVILES,
+      enum: CATALOGOS.ESTADOS_CIVILES,
       trim: true
     },
     nivelEducativo: {
       type: String,
-      enum: NIVELES_EDUCATIVOS,
+      enum: CATALOGOS.NIVELES_EDUCATIVOS,
       trim: true
     },
     idioma: {
       type: String,
-      enum: IDIOMAS,
+      enum: CATALOGOS.IDIOMAS,
       trim: true
     },
     // Campos adicionales para el formulario Angular
     hobbies: {
       type: [String],
-      enum: HOBBIES_DISPONIBLES,
+      enum: CATALOGOS.HOBBIES_DISPONIBLES,
       default: []
     },
     notasAdicionales: {
